@@ -79,3 +79,11 @@ def test(mark_expr: str, target: str):
     # Make sure this has been built
     image = build_impl(target)
     docker_test(image, mark_expr)
+
+
+@commands.command()
+@click.option("--target", type=str, default="dev")
+def get_image(target: str):
+    """Spit out the computed name for a docker image"""
+    image_name = ":".join(get_docker_image(target))
+    click.echo(image_name)
