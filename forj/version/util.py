@@ -51,16 +51,14 @@ def _deduce_helper():
     """Deduce the current version."""
     ver = from_file()
     try:
-        # BRANCH_NAME will be main or dev or PR-something
-        branch = os.environ["BRANCH_NAME"]
+        # BRANCH_NAME will be the branch name or PR-something
+        branch = os.environ["BRANCH_NAME"].replace('/','-')
         build_no = os.environ["BUILD_NUMBER"]
         if branch in {"main", "master"}:
             return ver.split("-")[0]
         if branch in {"dev", "develop"}:
             return ver
-        elif os.environ["CHANGE_BRANCH"].startswith("release/") or os.environ[
-            "CHANGE_TARGET"
-        ] in {"main", "master"}:
+        elif os.getenv("CHANGE_BRANCH", "").startswith("release/") or os.getenv("CHANGE_TARGET", "") in {"main", "master"}:
             return f'{ver.split("-")[0]}-rc.{build_no}'
         else:
             return f'{ver.split("-")[0]}-{branch}.{build_no}'
