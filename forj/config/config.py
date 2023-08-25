@@ -25,6 +25,8 @@ class Project:
     # STUFF between the docker registry and image name:
     # {DOCKER_REGYSTRY}/{self.docker_path}/{self.name}:{version}
     docker_path: str
+    # Python module sources path
+    python_module_path: str
 
     def dump(self, path):
         with open(path, "w") as f:
