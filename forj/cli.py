@@ -2,9 +2,10 @@ from os import chdir
 
 import click
 
+from .config import commands as config_commands
 from .docker import commands as docker_commands
 from .helm import commands as helm_commands
-from .config import commands as config_commands
+from .python import commands as python_commands
 from .util import find_project_root
 from .version import commands as version_commands
 
@@ -27,7 +28,8 @@ def main(ctx):
             )
 
 
-main.add_command(docker_commands)
 main.add_command(config_commands)
-main.add_command(version_commands)
+main.add_command(docker_commands)
+main.add_command(python_commands)
 main.add_command(helm_commands)
+main.add_command(version_commands)

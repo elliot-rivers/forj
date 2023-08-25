@@ -8,6 +8,8 @@ install_requires = [
     "bump2version>=1.0.1,<2",
     "urllib3<2",
     "docker>=5.0.0,<6",
+    "black",
+    "pylint"
 ]
 tests_require = [
     "pytest",

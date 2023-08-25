@@ -31,9 +31,9 @@ def build(tag: str, target: Optional[str] = None):
     run(" ".join(cmd), shell=True, check=True)
 
 
-def shell(image: str, cmd: Collection[str]):
+def shell(image: str, cmd: Collection[str], workdir=None):
     """Run a docker shell"""
-    cmd = [
+    docker_cmd = [
         "docker",
         "run",
         "--rm",
@@ -44,11 +44,13 @@ def shell(image: str, cmd: Collection[str]):
         "host",
         "--env-file",
         ".env.example",
-        image,
-        *cmd,
     ]
+    if workdir:
+        docker_cmd += ['--workdir', workdir]
+    docker_cmd += [image, *cmd]
+
     try:
-        run(" ".join(cmd), shell=True, check=True)
+        run(" ".join(docker_cmd), shell=True, check=True)
     except CalledProcessError:
         click.secho("Container failed to run with provided arguments:", fg="red")
         click.secho(f'    {" ".join(cmd)}', fg="red")
