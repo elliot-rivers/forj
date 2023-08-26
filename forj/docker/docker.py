@@ -11,6 +11,7 @@ Sorry.
 import os
 from pathlib import Path
 from subprocess import CalledProcessError, run
+import sys
 from typing import Collection, Optional
 
 import click
@@ -37,7 +38,6 @@ def shell(image: str, cmd: Collection[str], workdir=None):
         "docker",
         "run",
         "--rm",
-        "-it",
         "-v",
         f"{Path().resolve()}:/app",
         "--network",
@@ -45,6 +45,8 @@ def shell(image: str, cmd: Collection[str], workdir=None):
         "--env-file",
         ".env.example",
     ]
+    if sys.stdout.isatty():
+        docker_cmd += ["-it"]
     if workdir:
         docker_cmd += ['--workdir', workdir]
     docker_cmd += [image, *cmd]
