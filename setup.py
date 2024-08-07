@@ -7,7 +7,7 @@ install_requires = [
     "click>=8.1.0,<9",
     "bump2version>=1.0.1,<2",
     "urllib3<2",
-    "docker>=5.0.0,<6",
+    "docker>=7.1.0,<8",
     "black",
     "pylint"
 ]
